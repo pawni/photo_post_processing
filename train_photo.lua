@@ -147,7 +147,7 @@ function train(trainingSet, validationSet)
             -- evaluate function for complete mini batch
             local outputs = model:forward(inputs)
             local f = criterion:forward(outputs, targets)
-            train_error = train_error + f:float()
+            train_error = train_error + f
             -- estimate df/dW
             local df_do = criterion:backward(outputs, targets)
             model:backward(inputs, df_do)
