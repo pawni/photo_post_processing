@@ -180,7 +180,7 @@ function train(trainingSet, validationSet)
     epoch = epoch + 1
 end
 
-maxEpochs = 15
+maxEpochs = opt.maxEpochs;
 
 for c=1,maxEpochs do
     train(trainingSet, validationSet)
