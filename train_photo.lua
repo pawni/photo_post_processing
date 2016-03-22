@@ -26,11 +26,11 @@ torch.manualSeed(1)
 torch.setnumthreads(4)
 print('<torch> set nb of threads to ' .. torch.getnumthreads())
 
-networks = require 'networks'
+require('networks')
 
 -- initialise model etc
 criterion = nn.MSECriterion()
-model = networks.get_network_1()
+model = get_network_1()
 
 print("get parameters")
 parameters,gradParameters = model:getParameters()
@@ -93,7 +93,7 @@ local testSet = generateDataset("raw/test/", "processed/test/")
 --end
 
 print("dataset generated")
-
+batchsize = opt.batchSize;
 local inputs = torch.Tensor(batchsize,3,240,160)
 local targets = torch.Tensor(batchsize,3,240,160)
 if opt.cuda then
@@ -101,7 +101,7 @@ if opt.cuda then
     targets = targets:cuda()
 end
 
-batchsize = opt.batchSize;
+
 function train(trainingSet, validationSet)
     -- epoch tracker
     epoch = epoch or 1
@@ -119,9 +119,13 @@ function train(trainingSet, validationSet)
         for i = t,math.min(t+batchsize-1,trainingSet:size()[1]) do
             -- load new sample
             local sample = trainingSet[i]
-            local input = sample[1]:clone():cuda()
-            local target = sample[2]:clone():cuda()
-
+            if opt.cuda then
+                input = sample[1]:clone():cuda()
+                target = sample[2]:clone():cuda()
+            else
+                input = sample[1]:clone()
+                target = sample[2]:clone()
+            end
             inputs[k] = input
             targets[k] = target
             k = k + 1
