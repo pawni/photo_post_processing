@@ -101,7 +101,7 @@ if opt.cuda then
     targets = targets:cuda()
 end
 
-
+local train_error = 0
 function train(trainingSet, validationSet)
     -- epoch tracker
     epoch = epoch or 1
@@ -147,7 +147,7 @@ function train(trainingSet, validationSet)
             -- evaluate function for complete mini batch
             local outputs = model:forward(inputs)
             local f = criterion:forward(outputs, targets)
-
+            train_error += f:float()
             -- estimate df/dW
             local df_do = criterion:backward(outputs, targets)
             model:backward(inputs, df_do)
