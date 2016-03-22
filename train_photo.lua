@@ -39,7 +39,7 @@ parameters,gradParameters = model:getParameters()
 if opt.cuda then
     require 'cutorch'
     require 'cunn'
-    torch.setdefaulttensortype('torch.CudaTensor')
+    --torch.setdefaulttensortype('torch.CudaTensor')
 
     criterion = criterion:cuda()
     model = model:cuda()
