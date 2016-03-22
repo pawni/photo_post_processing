@@ -171,6 +171,7 @@ function train(trainingSet, validationSet)
 
     -- time taken
     time = sys.clock() - time
+    print("<trainer> time for one epoch " .. time .. "s")
     time = time / trainingSet:size()[1]
     print("<trainer> time to learn 1 sample = " .. (time*1000) .. 'ms')
     print("<trainer> training error is " .. train_error)
